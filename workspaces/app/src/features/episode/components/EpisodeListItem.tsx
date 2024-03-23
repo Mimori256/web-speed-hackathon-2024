@@ -11,6 +11,8 @@ import { useImage } from '../../../foundation/hooks/useImage';
 import { Color, Radius, Space, Typography } from '../../../foundation/styles/variables';
 import { useEpisode } from '../hooks/useEpisode';
 
+import type { GetEpisodeListResponse } from '@wsh-2024/schema/src/api/episodes/GetEpisodeListResponse';
+
 const _Wrapper = styled.li`
   width: 100%;
 `;
@@ -29,11 +31,19 @@ const _ImgWrapper = styled.div`
 
 type Props = {
   bookId: string;
-  episodeId: string;
+  episodeSource: string | GetEpisodeListResponse[number];
 };
 
-export const EpisodeListItem: React.FC<Props> = ({ bookId, episodeId }) => {
-  const { data: episode } = useEpisode({ params: { episodeId } });
+export const EpisodeListItem: React.FC<Props> = ({ bookId, episodeSource }) => {
+  let episode: string | GetEpisodeListResponse[number];
+
+  if (typeof episodeSource === 'string') {
+    const episodeId = episodeSource;
+    const { data } = useEpisode({ params: { episodeId } });
+    episode = data;
+  } else {
+    episode = episodeSource;
+  }
 
   const imageUrl = useImage({ height: 96, imageId: episode.image.id, width: 96 });
 
