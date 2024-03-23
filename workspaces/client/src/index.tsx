@@ -10,7 +10,7 @@ import { ClientApp } from '@wsh-2024/app/src/index';
 import { registerServiceWorker } from './utils/registerServiceWorker';
 
 const main = async () => {
-  await registerServiceWorker();
+  registerServiceWorker();
   // await preloadImages();
 
   const rootElement = document.getElementById('root')!;
