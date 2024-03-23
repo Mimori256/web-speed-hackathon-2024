@@ -1,7 +1,9 @@
-import path from 'path-browserify';
-
 async function wait(milliseconds: number) {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
+}
+
+function getExtension(path: string) {
+  return path.split('.').pop()?.toLowerCase();
 }
 
 export async function preloadImages() {
@@ -10,7 +12,10 @@ export async function preloadImages() {
   }
 
   const imagePathList: string[] = process.env['PATH_LIST'].split(',').filter((imagePath) => {
-    const extension = path.parse(imagePath).ext.toLowerCase();
+    const extension = getExtension(imagePath);
+    if (extension == null) {
+      return false;
+    }
     return ['.bmp', '.jpg', '.jpeg', '.gif', '.png', '.webp', '.avif'].includes(extension);
   });
 
