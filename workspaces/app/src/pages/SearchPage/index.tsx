@@ -16,12 +16,9 @@ const SearchPage: React.FC = () => {
   const [isClient, setIsClient] = useState(false);
   const [keyword, setKeyword] = useState('');
 
-  const onChangedInput = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setKeyword(event.target.value);
-    },
-    [setKeyword],
-  );
+  const onChangedInput = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    setKeyword(event.target.value);
+  }, []);
 
   useEffect(() => {
     setIsClient(true);
