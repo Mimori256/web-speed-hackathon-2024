@@ -1,5 +1,5 @@
 import { useSetAtom } from 'jotai';
-import React, { useEffect, useId, useState } from 'react';
+import React, { useEffect, useId, useState, useCallback } from 'react';
 import styled from 'styled-components';
 
 import { DialogContentAtom } from '../atoms/DialogContentAtom';
@@ -34,7 +34,7 @@ export const Footer: React.FC = () => {
 
   const updateDialogContent = useSetAtom(DialogContentAtom);
 
-  const handleRequestToTermDialogOpen = async () => {
+  const handleRequestToTermDialogOpen = useCallback(async () => {
     const term = await fetch('/assets/Term.txt').then((response) => response.text());
     updateDialogContent(
       <_Content aria-labelledby={termDialogA11yId} role="dialog">
@@ -47,9 +47,9 @@ export const Footer: React.FC = () => {
         </Text>
       </_Content>,
     );
-  };
+  }, [termDialogA11yId, updateDialogContent]);
 
-  const handleRequestToContactDialogOpen = async () => {
+  const handleRequestToContactDialogOpen = useCallback(async () => {
     const contact = await fetch('/assets/Contact.txt').then((response) => response.text());
     updateDialogContent(
       <_Content aria-labelledby={contactDialogA11yId} role="dialog">
@@ -62,9 +62,9 @@ export const Footer: React.FC = () => {
         </Text>
       </_Content>,
     );
-  };
+  }, [contactDialogA11yId, updateDialogContent]);
 
-  const handleRequestToQuestionDialogOpen = async () => {
+  const handleRequestToQuestionDialogOpen = useCallback(async () => {
     const question = await fetch('/assets/Question.txt').then((response) => response.text());
     updateDialogContent(
       <_Content aria-labelledby={questionDialogA11yId} role="dialog">
@@ -77,9 +77,9 @@ export const Footer: React.FC = () => {
         </Text>
       </_Content>,
     );
-  };
+  }, [questionDialogA11yId, updateDialogContent]);
 
-  const handleRequestToCompanyDialogOpen = async () => {
+  const handleRequestToCompanyDialogOpen = useCallback(async () => {
     const company = await fetch('/assets/Company.txt').then((response) => response.text());
     updateDialogContent(
       <_Content aria-labelledby={companyDialogA11yId} role="dialog">
@@ -92,9 +92,9 @@ export const Footer: React.FC = () => {
         </Text>
       </_Content>,
     );
-  };
+  }, [companyDialogA11yId, updateDialogContent]);
 
-  const handleRequestToOverviewDialogOpen = async () => {
+  const handleRequestToOverviewDialogOpen = useCallback(async () => {
     const overview = await fetch('/assets/Overview.txt').then((response) => response.text());
     updateDialogContent(
       <_Content aria-labelledby={overviewDialogA11yId} role="dialog">
@@ -107,7 +107,7 @@ export const Footer: React.FC = () => {
         </Text>
       </_Content>,
     );
-  };
+  }, [overviewDialogA11yId, updateDialogContent]);
 
   return (
     <Box as="footer" backgroundColor={Color.Background} p={Space * 1}>
