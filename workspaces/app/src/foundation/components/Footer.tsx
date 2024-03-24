@@ -1,5 +1,5 @@
 import { useSetAtom } from 'jotai';
-import React, { useId } from 'react';
+import React, { useEffect, useId, useState } from 'react';
 import styled from 'styled-components';
 
 import { DialogContentAtom } from '../atoms/DialogContentAtom';
@@ -20,9 +20,9 @@ const _Content = styled.section`
 `;
 
 export const Footer: React.FC = () => {
-  const [isClient, setIsClient] = React.useState(false);
+  const [isClient, setIsClient] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setIsClient(true);
   }, []);
 
@@ -35,7 +35,7 @@ export const Footer: React.FC = () => {
   const updateDialogContent = useSetAtom(DialogContentAtom);
 
   const handleRequestToTermDialogOpen = async () => {
-    const { TERM } = await import('../constants/Term');
+    const term = await fetch('/assets/Term.txt').then((response) => response.text());
     updateDialogContent(
       <_Content aria-labelledby={termDialogA11yId} role="dialog">
         <Text as="h2" color={Color.MONO_100} id={termDialogA11yId} typography={Typography.NORMAL16}>
@@ -43,14 +43,14 @@ export const Footer: React.FC = () => {
         </Text>
         <Spacer height={Space * 1} />
         <Text as="p" color={Color.MONO_100} typography={Typography.NORMAL12}>
-          {TERM}
+          {term}
         </Text>
       </_Content>,
     );
   };
 
   const handleRequestToContactDialogOpen = async () => {
-    const { CONTACT } = await import('../constants/Contact');
+    const contact = await fetch('/assets/Contact.txt').then((response) => response.text());
     updateDialogContent(
       <_Content aria-labelledby={contactDialogA11yId} role="dialog">
         <Text as="h2" color={Color.MONO_100} id={contactDialogA11yId} typography={Typography.NORMAL16}>
@@ -58,14 +58,14 @@ export const Footer: React.FC = () => {
         </Text>
         <Spacer height={Space * 1} />
         <Text as="p" color={Color.MONO_100} typography={Typography.NORMAL12}>
-          {CONTACT}
+          {contact}
         </Text>
       </_Content>,
     );
   };
 
   const handleRequestToQuestionDialogOpen = async () => {
-    const { QUESTION } = await import('../constants/Question');
+    const question = await fetch('/assets/Question.txt').then((response) => response.text());
     updateDialogContent(
       <_Content aria-labelledby={questionDialogA11yId} role="dialog">
         <Text as="h2" color={Color.MONO_100} id={questionDialogA11yId} typography={Typography.NORMAL16}>
@@ -73,14 +73,14 @@ export const Footer: React.FC = () => {
         </Text>
         <Spacer height={Space * 1} />
         <Text as="p" color={Color.MONO_100} typography={Typography.NORMAL12}>
-          {QUESTION}
+          {question}
         </Text>
       </_Content>,
     );
   };
 
   const handleRequestToCompanyDialogOpen = async () => {
-    const { COMPANY } = await import('../constants/Company');
+    const company = await fetch('/assets/Company.txt').then((response) => response.text());
     updateDialogContent(
       <_Content aria-labelledby={companyDialogA11yId} role="dialog">
         <Text as="h2" color={Color.MONO_100} id={companyDialogA11yId} typography={Typography.NORMAL16}>
@@ -88,14 +88,14 @@ export const Footer: React.FC = () => {
         </Text>
         <Spacer height={Space * 1} />
         <Text as="p" color={Color.MONO_100} typography={Typography.NORMAL12}>
-          {COMPANY}
+          {company}
         </Text>
       </_Content>,
     );
   };
 
   const handleRequestToOverviewDialogOpen = async () => {
-    const { OVERVIEW } = await import('../constants/Overview');
+    const overview = await fetch('/assets/Overview.txt').then((response) => response.text());
     updateDialogContent(
       <_Content aria-labelledby={overviewDialogA11yId} role="dialog">
         <Text as="h2" color={Color.MONO_100} id={overviewDialogA11yId} typography={Typography.NORMAL16}>
@@ -103,7 +103,7 @@ export const Footer: React.FC = () => {
         </Text>
         <Spacer height={Space * 1} />
         <Text as="p" color={Color.MONO_100} typography={Typography.NORMAL12}>
-          {OVERVIEW}
+          {overview}
         </Text>
       </_Content>,
     );
@@ -112,7 +112,7 @@ export const Footer: React.FC = () => {
   return (
     <Box as="footer" backgroundColor={Color.Background} p={Space * 1}>
       <Flex align="flex-start" direction="column" gap={Space * 1} justify="flex-start">
-        <img alt="Cyber TOON" src="/assets/cyber-toon.svg" loading="lazy" />
+        <img alt="Cyber TOON" src="/assets/cyber-toon.svg" />
         <Flex align="start" direction="row" gap={Space * 1.5} justify="center">
           <_Button disabled={!isClient} onClick={handleRequestToTermDialogOpen}>
             利用規約
